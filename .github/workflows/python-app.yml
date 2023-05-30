@@ -4,6 +4,7 @@
 name: python run main.py 
 
 on:
+  workflow_dispatch:
   schedule:
     - cron: '0 8 * * 2'
 

@@ -1,4 +1,5 @@
 import json
+import os
 import requests as r
 import urllib.parse
 
@@ -70,8 +71,34 @@ def saveHistory(token,cid):
     j=json.loads(response.text)
     return j
 
+
+#获取成员列表
+try:
+    member=os.environ['MEMBER']
+except:
+    try:
+        with open('member.txt','r',encoding='utf8') as member_file:
+            member=member_file.read()
+    except:
+        open('member.txt','x',encoding='utf8')
+        print('已创建member.txt，请添加mid或者XLToken后重新运行！（一行一个或以"|"分隔）')
+        exit()
+#检查member
+if member != '':
+    pass
+else:
+    exit('+================+\n| member未定义！ |\n+================+')
+    
+import re
+
+#清除所有空字符并以|或换行符分割字符串创建列表
+if re.search('\|',member):
+    memberlist=(("".join(member.split()))).split('|')
+else:
+    memberlist=(member.replace(' ','').rstrip('\n').split('\n'))
+
 if __name__ == "__main__":
-    for mid in open("mid.txt"):
+    for mid in memberlist:
         #跳过空行
         if mid.isspace():
           continue
